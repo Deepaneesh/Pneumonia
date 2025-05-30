@@ -590,6 +590,65 @@ class samples more during training.</li>
 </ul></li>
 </ol>
 </div>
+<div id="overfitting-prevention-strategies" class="section level2">
+<h2>Overfitting Prevention Strategies</h2>
+<p>To ensure that the model generalizes well to unseen data and does not
+overfit the training set, several techniques were implemented:</p>
+<div id="data-augmentation" class="section level3">
+<h3>1. <strong>Data Augmentation</strong></h3>
+<ul>
+<li>Augmentation techniques such as random rotations, zooms, shifts, and
+horizontal flips were applied using
+<code>ImageDataGenerator</code>.</li>
+<li>These augmentations artificially increased the diversity of the
+training data and exposed the model to varied perspectives of the same
+class.</li>
+<li>This helps the model learn more robust features and reduces
+over-reliance on specific patterns.</li>
+</ul>
+</div>
+<div id="transfer-learning-resnet-50-with-pretrained-weights" class="section level3">
+<h3>2. <strong>Transfer Learning (ResNet-50 with Pretrained
+Weights)</strong></h3>
+<ul>
+<li>We used the ResNet-50 architecture pretrained on ImageNet.</li>
+<li>Early layers were frozen to preserve learned low-level features
+(like edges and textures), which helps regularize the learning
+process.</li>
+<li>Only the top layers were fine-tuned, reducing the risk of
+overfitting with a small dataset.</li>
+</ul>
+</div>
+<div id="dropout-layers" class="section level3">
+<h3>3. <strong>Dropout Layers</strong></h3>
+<ul>
+<li>Dropout was introduced in the dense layers with a rate (e.g., 0.5)
+to randomly deactivate a fraction of neurons during training.</li>
+<li>This prevents the model from becoming overly reliant on any single
+neuron and encourages distributed learning.</li>
+</ul>
+</div>
+<div id="early-stopping" class="section level3">
+<h3>4. <strong>Early Stopping</strong></h3>
+<ul>
+<li>The training process was monitored with early stopping based on
+validation loss.</li>
+<li>If the validation performance did not improve for several epochs,
+training was stopped to avoid overfitting.</li>
+</ul>
+</div>
+<div id="batch-normalization" class="section level3">
+<h3>5. <strong>Batch Normalization</strong></h3>
+<ul>
+<li>Batch normalization layers were included to stabilize the learning
+process and act as a form of regularization by reducing internal
+covariate shift.</li>
+</ul>
+<p>These combined measures helped maintain a balance between model
+complexity and generalization, improving performance across training,
+validation, and testing sets.</p>
+</div>
+</div>
 <div id="evaluation-summary" class="section level2">
 <h2>Evaluation Summary</h2>
 <p>To assess the performance of the ResNet-50 model for pneumonia

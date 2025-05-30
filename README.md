@@ -150,6 +150,32 @@ To address this issue, the following techniques were employed:
    - This forces the model to penalize misclassification of minority class samples more during training.
 
 
+##  Overfitting Prevention Strategies
+
+To ensure that the model generalizes well to unseen data and does not overfit the training set, several techniques were implemented:
+
+### 1. **Data Augmentation**
+- Augmentation techniques such as random rotations, zooms, shifts, and horizontal flips were applied using `ImageDataGenerator`.
+- These augmentations artificially increased the diversity of the training data and exposed the model to varied perspectives of the same class.
+- This helps the model learn more robust features and reduces over-reliance on specific patterns.
+
+### 2. **Transfer Learning (ResNet-50 with Pretrained Weights)**
+- We used the ResNet-50 architecture pretrained on ImageNet.
+- Early layers were frozen to preserve learned low-level features (like edges and textures), which helps regularize the learning process.
+- Only the top layers were fine-tuned, reducing the risk of overfitting with a small dataset.
+
+### 3. **Dropout Layers**
+- Dropout was introduced in the dense layers with a rate (e.g., 0.5) to randomly deactivate a fraction of neurons during training.
+- This prevents the model from becoming overly reliant on any single neuron and encourages distributed learning.
+
+### 4. **Early Stopping**
+- The training process was monitored with early stopping based on validation loss.
+- If the validation performance did not improve for several epochs, training was stopped to avoid overfitting.
+
+### 5. **Batch Normalization**
+- Batch normalization layers were included to stabilize the learning process and act as a form of regularization by reducing internal covariate shift.
+
+These combined measures helped maintain a balance between model complexity and generalization, improving performance across training, validation, and testing sets.
 
 ## Evaluation Summary
 
