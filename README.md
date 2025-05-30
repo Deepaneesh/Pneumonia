@@ -1,4 +1,4 @@
-# Pneumonia
+# **Pneumonia**
 
 Pneumonia is an infection that inflames the air sacs in one or both lungs. The air sacs may fill with fluid or pus, causing symptoms like:
 
@@ -56,7 +56,7 @@ Pneumonia can be caused by different types of microorganisms, including:
 
 Most healthy people recover from pneumonia, but it can be serious or even life-threatening, especially in high-risk individuals.
 
-# Pneumonia Detection using Chest X-Ray Images
+# **Pneumonia Detection using Chest X-Ray Images**
 
 **Problem Statement:**\
 Pneumonia is a serious respiratory infection that requires timely diagnosis for effective treatment. Manual analysis of chest X-ray images is time-consuming and prone to human error. The goal is to develop a deep learning model, specifically using **ResNet50**, to automate the classification of chest X-ray images into **pneumonia** and **normal** cases.
@@ -73,7 +73,7 @@ Pneumonia is a serious respiratory infection that requires timely diagnosis for 
 
 -   **Evaluation:** Used confusion matrices and key metrics including Accuracy, F1-Score, and Cohen’s Kappa.
 
-# Dataset
+# **Dataset**
 
 1.  Collected from **Kaggle**.
 
@@ -85,7 +85,7 @@ Pneumonia is a serious respiratory infection that requires timely diagnosis for 
 
     `1` → Pneumonia
 
-# Model
+# **Model**
 
 ## ResNet50
 
@@ -131,9 +131,9 @@ ResNet uses identity shortcut connections that skip one or more layers. These co
 
 -   Combine with **augmentation** and **class weights** for better generalization in imbalanced datasets like yours.
 
-#  Class Imbalance Detection & Mitigation
+# **Class Imbalance Detection & Mitigation**
 
-##  Detection of Class Imbalance
+## Detection of Class Imbalance
 
 To detect class imbalance in the training set, the distribution of labels (Normal vs. Pneumonia) was analyzed using a frequency count and visualized with bar plots. The analysis revealed a significant imbalance—pneumonia cases were far more frequent than normal cases. This imbalance can bias the model towards predicting the majority class, reducing its ability to correctly detect the minority class.
 
@@ -141,43 +141,46 @@ To detect class imbalance in the training set, the distribution of labels (Norma
 
 To address this issue, the following techniques were employed:
 
-1. **Data Augmentation for Minority Class**:
-   - Using `ImageDataGenerator`, we applied transformations such as rotation, zooming, shifting, and flipping to artificially increase the number of samples in the minority class.
-   - This helps expose the model to a wider variety of samples, improving generalization.
+1.  **Data Augmentation for Minority Class**:
+    -   Using `ImageDataGenerator`, we applied transformations such as rotation, zooming, shifting, and flipping to artificially increase the number of samples in the minority class.
+    -   This helps expose the model to a wider variety of samples, improving generalization.
+2.  **Class Weighting**:
+    -   The `class_weight` parameter in the `model.fit()` function was used to assign a higher weight to the minority class.
+    -   This forces the model to penalize misclassification of minority class samples more during training.
 
-2. **Class Weighting**:
-   - The `class_weight` parameter in the `model.fit()` function was used to assign a higher weight to the minority class.
-   - This forces the model to penalize misclassification of minority class samples more during training.
-
-
-##  Overfitting Prevention Strategies
+## Overfitting Prevention Strategies
 
 To ensure that the model generalizes well to unseen data and does not overfit the training set, several techniques were implemented:
 
 ### 1. **Data Augmentation**
-- Augmentation techniques such as random rotations, zooms, shifts, and horizontal flips were applied using `ImageDataGenerator`.
-- These augmentations artificially increased the diversity of the training data and exposed the model to varied perspectives of the same class.
-- This helps the model learn more robust features and reduces over-reliance on specific patterns.
+
+-   Augmentation techniques such as random rotations, zooms, shifts, and horizontal flips were applied using `ImageDataGenerator`.
+-   These augmentations artificially increased the diversity of the training data and exposed the model to varied perspectives of the same class.
+-   This helps the model learn more robust features and reduces over-reliance on specific patterns.
 
 ### 2. **Transfer Learning (ResNet-50 with Pretrained Weights)**
-- We used the ResNet-50 architecture pretrained on ImageNet.
-- Early layers were frozen to preserve learned low-level features (like edges and textures), which helps regularize the learning process.
-- Only the top layers were fine-tuned, reducing the risk of overfitting with a small dataset.
+
+-   We used the ResNet-50 architecture pretrained on ImageNet.
+-   Early layers were frozen to preserve learned low-level features (like edges and textures), which helps regularize the learning process.
+-   Only the top layers were fine-tuned, reducing the risk of overfitting with a small dataset.
 
 ### 3. **Dropout Layers**
-- Dropout was introduced in the dense layers with a rate (e.g., 0.5) to randomly deactivate a fraction of neurons during training.
-- This prevents the model from becoming overly reliant on any single neuron and encourages distributed learning.
+
+-   Dropout was introduced in the dense layers with a rate (e.g., 0.5) to randomly deactivate a fraction of neurons during training.
+-   This prevents the model from becoming overly reliant on any single neuron and encourages distributed learning.
 
 ### 4. **Early Stopping**
-- The training process was monitored with early stopping based on validation loss.
-- If the validation performance did not improve for several epochs, training was stopped to avoid overfitting.
+
+-   The training process was monitored with early stopping based on validation loss.
+-   If the validation performance did not improve for several epochs, training was stopped to avoid overfitting.
 
 ### 5. **Batch Normalization**
-- Batch normalization layers were included to stabilize the learning process and act as a form of regularization by reducing internal covariate shift.
+
+-   Batch normalization layers were included to stabilize the learning process and act as a form of regularization by reducing internal covariate shift.
 
 These combined measures helped maintain a balance between model complexity and generalization, improving performance across training, validation, and testing sets.
 
-## Evaluation Summary
+## **Evaluation Summary**
 
 To assess the performance of the ResNet-50 model for pneumonia detection using chest X-ray images, we evaluated it on the training, validation, and testing datasets. The metrics used include **Accuracy**, **Cohen’s Kappa**, and **F1 Score**—each offering a distinct perspective on the model's effectiveness, robustness, and ability to generalize across data splits.
 
@@ -189,7 +192,7 @@ To assess the performance of the ResNet-50 model for pneumonia detection using c
 | Validation | 0.7424   | 0.0000        | 0.6326   |
 | Testing    | 0.6250   | 0.0000        | 0.4808   |
 
-### Interpretation & Insights
+### **Interpretation & Insights**
 
 From the evaluation metrics above, we can draw several important observations:
 
@@ -203,13 +206,13 @@ From the evaluation metrics above, we can draw several important observations:
     -   The performance further declines with an accuracy of 62.50% and a F1 Score of 0.4808.
     -   Again, a Cohen’s Kappa of 0.0000 shows no meaningful agreement between the model's predictions and true labels on test data.
 
-### Key Takeaways
+### **Key Takeaways**
 
 -   The model likely suffers from overfitting, where it learns the training data too well but fails to generalize to validation and test sets.
 -   The extremely low Cohen’s Kappa values across all datasets indicate that class imbalance could be severely affecting the performance. The model may be biased toward the majority class.
 -   The drop in F1 Score from training to testing suggests that the model struggles to balance precision and recall when evaluated on new, unseen images.
 
-### future Improvements
+### **future Improvements**
 
 To improve model performance and generalization:
 
